@@ -1,0 +1,1 @@
+{"ast":null,"code":"export class GridMatrix {\n  constructor(id, firstName, lastName, salary) {}\n\n}","map":null,"metadata":{},"sourceType":"module"}

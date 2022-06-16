@@ -1,0 +1,87 @@
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none; /* Safari */
+       -khtml-user-select: none; /* Konqueror HTML */
+         -moz-user-select: none; /* Old versions of Firefox */
+          -ms-user-select: none; /* Internet Explorer/Edge */
+              user-select: none; /* Non-prefixed version, currently
+                                    supported by Chrome, Edge, Opera and Firefox */
+}
+
+img {
+    pointer-events: none
+  }
+  
+.resourcePanel {
+    border: 3px solid black;
+    width: 50%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: 1px;
+    padding-bottom: 8px;
+    padding-top: 8px;
+}
+
+.resourceRow {
+    width: 24%;
+    display: flex;
+}
+
+.tile{
+    position: relative;
+    height: 40px;
+    width: 40px;
+    float: left;
+}
+
+.player-tile{
+    position: relative;
+    height: 40px;
+    width: 40px;
+    float: left;
+}
+
+.wall-tile{
+    position: relative;
+    height: 40px;
+    width: 40px;
+    float: left;
+}
+
+.unexplored-tile{
+    position: relative;
+    height: 40px;
+    width: 40px;
+    background-color: black;
+    float: left;
+}
+
+
+.backgroundImage {
+    position: relative;
+    top: 0;
+    left: 0;
+  }
+
+.topImage {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.levelNumber{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+
+
+.tileRow{
+    height: 40px;
+    width: 800px;
+}

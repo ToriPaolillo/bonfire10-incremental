@@ -1,0 +1,27 @@
+<div style="position:absolute; top:0px; right:0px; bottom:0px; left:0px;">
+    <div style="border: 2px solid white; width: 1164px; height: 804px;">
+
+        <div style="float:left;">
+            <div *ngFor="let row of gridMatrix.tileArray; let i = index" class="tileRow noselect">
+                <div *ngFor="let tile of gridMatrix.tileArray[i]; let j = index" class="tile noselect"
+                    (click)="onClick(tile)" (mouseover)="determineRelevantTile(tile); magnifyLevel(tile)" (mouseout)="determineRelevantTile(tile); shrinkLevel(tile)">
+                    <!-- <img *ngIf="tile.explored" src='{{ "assets/images/default/Dirt.png" }}' class="backgroundImage noselect" width="40" height="40">
+        <img *ngIf="tile.contents != null && tile.explored" src='{{ "assets/images/default/" + getImage(tile) + ".png" }}' class="topImage noselect" width="40" height="40"> -->
+                    <img src='{{ "assets/images/default/Dirt.png" }}' class="backgroundImage noselect" width="40"
+                        height="40">
+                    <img src='{{ "assets/images/default/" + tile.getImage() + ".png" }}' class="topImage noselect"
+                        width="40" height="40">
+                    <img *ngIf="tile.playerAndContent" src='{{ "assets/images/default/HeroBase.png" }}'
+                        class="topImage noselect" width="40" height="40">
+                    <img *ngIf="tile.playerAndContent" src='{{ "assets/images/default/" + character.level + ".png" }}'
+                        class="levelNumber noselect"
+                        width="{{character.levelNumberWidth}}" height="{{character.levelNumberHeight}}">
+                    <img *ngIf="tile.playerOrEnemy() && tile.explored"
+                        src='{{ "assets/images/default/" + tile.contents.level + ".png" }}' class="levelNumber noselect"
+                        width="{{tile.contents.levelNumberWidth}}" height="{{tile.contents.levelNumberHeight}}">
+                </div>
+            </div>
+        </div>
+        <infoPanel [character]="character" [relevantTile]="relevantTile" (mouseover)="determineRelevantTile(gridMatrix.getPlayerTile());" ></infoPanel>
+    </div>
+</div>

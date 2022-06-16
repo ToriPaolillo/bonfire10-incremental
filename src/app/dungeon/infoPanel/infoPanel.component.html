@@ -1,0 +1,114 @@
+<div class="panelContainer">
+    <div class="nameRow noselect">
+        <input type="text" class="playerName" [(ngModel)]="character.name">
+    </div>
+
+    <div class="pictureRow">
+        <img src="assets/images/default/bigHero.png" class="noselect" style="float:left" width="180" height="180">
+        <div style="float:left; width: 44%; padding-left: 4px">
+            <div style="width: 100%; height: 46px">
+
+                <img style="float: left; background-color: black; border: 2px solid grey"
+                    src="assets/images/default/Gold.png" class="noselect" width="42" height="42">
+                <div class="labelDiv"> {{character.gold}} </div>
+            </div>
+
+            <div style="width: 100%; height: 46px">
+                <div class="labelDivRight"> {{character.piety}} </div>
+                <img style="float: right;" src="assets/images/default/Piety.png" class="noselect" width="40"
+                    height="40">
+            </div>
+
+            <div style="width: 100%; height: 46px">
+                <img style="float: left; border: 3px solid white;" src="assets/images/default/HealthPotion.png"
+                    class="noselect" width="43" height="43">
+                <div class="labelDiv"> {{character.healthPotions}} </div>
+            </div>
+
+            <div style="width: 100%; height: 46px">
+                <div class="labelDivRight"> {{character.manaPotions}} </div>
+                <img style="float: right; border: 3px solid white;" src="assets/images/default/ManaPotion.png"
+                    class="noselect" width="43" height="43">
+            </div>
+
+        </div>
+
+
+    </div>
+
+    <div class="statsRow">
+
+        <div class="statsRowRow">
+            <img style="float: left;" src="assets/images/default/Attackboost.png" class="noselect" width="40"
+                height="40">
+            <div class="labelDiv"> {{character.getCurrentAttack()}} </div>
+            <mat-progress-bar id="levelProgressBar" style="height:32px; width: 240px; float:right; margin-top: 5px;"
+                mode="determinate" value="{{(character.experience/(character.level*5))*100}}"></mat-progress-bar>
+            <div
+                style="position:relative; top: -26px; left: 95px; font-size: 24px; color:white; display: inline-block;">
+                {{ "Level " + character.level + " (" + character.experience + "/" + character.getMaxExperience() + ")"
+                }}
+            </div>
+        </div>
+
+
+        <div class="statsRowRow">
+            <img style="float: left;" src="assets/images/default/HPBoost.png" class="noselect" width="40" height="40">
+            <mat-progress-bar id="healthBar" style="height:32px; width: 308px; float:right; margin-top: 5px;"
+                mode="determinate" value="{{(character.currentHealth/(character.baseHealth * character.level))*100}}">
+            </mat-progress-bar>
+            <div
+                style="position:relative; top: -26px; left: 16px; font-size: 24px; color:white; display: inline-block;">
+                {{ character.currentHealth + "/" + character.getMaxHealth()}}
+            </div>
+        </div>
+
+        <div class="statsRowRow">
+            <img style="float: left;" src="assets/images/default/MPBoost.png" class="noselect" width="40" height="40">
+            <mat-progress-bar id="manaBar" style="height:32px; width: 308px; float:right; margin-top: 5px;"
+                mode="determinate" value="{{(character.currentMana/character.baseMana)*100}}"></mat-progress-bar>
+            <div
+                style="position:relative; top: -26px; left: 16px; font-size: 24px; color:white; display: inline-block;">
+                {{ character.currentMana + "/" + character.baseMana}}
+            </div>
+        </div>
+
+        <div>
+
+            <div *ngFor="let spell of character.spells; let i = index;" [ngStyle]="{'margin-left.px': 150/(character.spells.length+1)}" class="container"
+            (click)='activateSpell(spell)' (mousedown)='mouseclickHeld(spell)' (mouseup)='mouseClickUp(spell)' (mouseleave)='mouseClickUp(spell)'>
+                <img src="assets/images/default/G_Empty.png" class="backgroundImage noselect" width="40" height="40">
+                <img src="assets/images/default/{{spell.pngString}}.png" class="topImage noselect" width="40" height="40">
+                <img *ngIf="spell.name != 'empty'" src="assets/images/default/G_Yellow.png" class="topImage noselect" width="40" height="40">
+                <img *ngIf="spell.spellBeingClickedSuccess" src="assets/images/default/G_Green.png" class="topImage noselect" width="40" height="40">
+                <img *ngIf="spell.spellBeingClickedFail" src="assets/images/default/G_Red.png" class="topImage noselect" width="40" height="40">
+
+                
+            </div>
+
+            <img style="float: left" [ngStyle]="{'margin-left.px': 150/(character.spells.length+1)}" src="assets/images/default/G_Converter.png"
+                class="backgroundImage noselect" width="40" height="40">
+
+        </div>
+    </div>
+
+
+
+    <div class="effectsRow">
+        <div *ngIf="tileHasNoInfo()"
+            style="font-size: 24px; color:white; display: inline-block; margin: 6px 0px 0px 6px;">
+            {{character.race + " " +character.class}}
+        </div>
+        <spellInfo *ngIf="tileIsSpell()" [character]=character [relevantTile]=relevantTile></spellInfo>
+        <enemyInfo *ngIf="tileIsEnemy()" [character]=character [relevantTile]=relevantTile></enemyInfo>
+
+
+    </div>
+
+    <div class="retireRow">
+        <button style="background-color: rgb(145, 52, 52);">Leave Dungeon</button>
+    </div>
+
+
+
+</div>

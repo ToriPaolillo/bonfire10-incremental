@@ -1,0 +1,66 @@
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none; /* Safari */
+       -khtml-user-select: none; /* Konqueror HTML */
+         -moz-user-select: none; /* Old versions of Firefox */
+          -ms-user-select: none; /* Internet Explorer/Edge */
+              user-select: none; /* Non-prefixed version, currently
+                                    supported by Chrome, Edge, Opera and Firefox */
+}
+
+.container{
+  position: relative;
+  height: 100%;
+  width: 110px;
+  float: left;
+}
+
+.backgroundImage {
+  position: relative;
+  margin: 6px;
+}
+
+.topImage {
+  position: absolute;
+  margin: 6px;
+}
+
+.spellName{
+  color: rgb(38, 211, 38);
+  font-weight: 500;
+  padding-top: 10px;
+  line-height: 34px;
+}
+
+.manaText{
+  color: rgb(5, 104, 253);
+  font-size: 24px;
+  font-weight: 500;
+  padding-top: 10px;
+  margin-left: 4px;
+  float:left;
+}
+
+.spellDescription{
+  color: white;
+  font-size: 20px;
+  font-weight: 400;
+  padding-top: 10px;
+  line-height: 24px;
+  margin-left: 4px;
+}
+
+.openSpellSlots:hover {
+  border-color: rgb(255, 255, 0) !important;
+  color: rgb(255, 255, 0);
+  opacity: 1 !important;
+}
+
+
+.fullSpellSlots:hover {
+  border-color: rgb(241, 51, 26) !important;
+  color: rgb(241, 51, 26);
+  opacity: 1 !important;
+}
+
+

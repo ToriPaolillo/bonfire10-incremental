@@ -1,0 +1,101 @@
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none; /* Safari */
+       -khtml-user-select: none; /* Konqueror HTML */
+         -moz-user-select: none; /* Old versions of Firefox */
+          -ms-user-select: none; /* Internet Explorer/Edge */
+              user-select: none; /* Non-prefixed version, currently
+                                    supported by Chrome, Edge, Opera and Firefox */
+}
+
+.resourcePanel {
+    border: 3px solid black;
+    width: 50%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: 1px;
+    padding-bottom: 8px;
+    padding-top: 8px;
+}
+
+.resourceRow {
+    width: 24%;
+    display: flex;
+}
+
+
+
+
+
+
+
+.container{
+    position: relative;
+    float: left;
+  }
+
+.backgroundImage {
+    position: relative;
+  }
+  
+  .topImage {
+    position: absolute;
+  }
+
+
+
+
+/* 
+
+.drag-container {
+    width: 300px;
+    height: 80px;
+    margin: 0 25px 25px 0;
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  .drop-container {
+    width: 80;
+    height: 80px;
+    margin: 0 25px 25px 0;
+    display: inline-block;
+    vertical-align: top;
+  }
+  
+  .example-list {
+    min-height: 60px;
+    border-radius: 4px;
+    overflow: hidden;
+    display: block;
+    background-repeat: repeat-x;
+    background-image: url("/assets/images/default/G_Empty.png");    
+    background-size: 40px;
+    background-position: center;
+    position: relative;
+
+  }
+  
+  .example-box {
+    display: table-cell;
+    padding-left: 30px;
+    position: absolute;
+    top: 20%;
+  }
+  
+  .cdk-drag-placeholder {
+    opacity: 0;
+  }
+  
+ 
+  
+  .example-box:last-child {
+    border: none;
+  }
+   */
+
+  

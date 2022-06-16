@@ -1,0 +1,150 @@
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none; /* Safari */
+       -khtml-user-select: none; /* Konqueror HTML */
+         -moz-user-select: none; /* Old versions of Firefox */
+          -ms-user-select: none; /* Internet Explorer/Edge */
+              user-select: none; /* Non-prefixed version, currently
+                                    supported by Chrome, Edge, Opera and Firefox */
+}
+
+img {
+    pointer-events: none
+}
+
+.container{
+    position: relative;
+    float: left;
+  }
+
+.backgroundImage {
+    position: relative;
+  }
+  
+  .topImage {
+    position: absolute;
+  }
+
+
+p{
+    line-height: 1px !important;
+    font-size: 44px;
+}
+.playerName{
+    background-color: black;
+    color: white;
+    
+}
+
+.labelDiv{
+    display: table-cell;
+    padding: 10px 0px 0px 2px;
+    vertical-align: middle;
+    float: left;
+    font-size: 36px;
+    color: white;
+}
+
+
+.labelDivRight{
+    display: table-cell;
+    padding: 10px 0px 0px 2px;
+    vertical-align: middle;
+    float: right;
+    font-size: 36px;
+    color: white;
+}
+
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: white;
+    opacity: 1; /* Firefox */
+  }
+  
+  :-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: white;
+  }
+  
+  ::-ms-input-placeholder { /* Microsoft Edge */
+    color: white;
+  }
+
+.panelContainer{
+    position: relative;
+    height: 800px;
+    width: 360px;
+    float: left;
+    border-left: 2px solid white;
+    background-repeat: repeat;
+    background-image: url("/assets/images/default/Wall2.png");    
+    background-size: 40px;
+}
+
+
+#levelProgressBar ::ng-deep .mat-progress-bar-fill::after {
+    background-color: rgb(31, 218, 31);
+}
+
+::ng-deep .mat-progress-bar-buffer {
+    background: black;
+}
+
+::ng-deep .mat-progress-bar {
+    border-radius: 0px;
+}
+
+#healthBar ::ng-deep .mat-progress-bar-fill::after {
+    background-color: rgb(255, 17, 0);
+}
+
+#manaBar ::ng-deep .mat-progress-bar-fill::after {
+    background-color: rgb(5, 104, 253);
+}
+
+
+
+
+
+
+
+
+
+
+
+.nameRow {
+    width: 100%;
+    height: 5%;
+}
+
+.pictureRow {
+    width: 100%;
+    height: 24%;
+}
+
+.statsRow {
+    width: 100%;
+    height: 24%;
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+.statsRowRow{
+    height: 46px;
+}
+
+
+.effectsRow {
+    width: 100%;
+    height: 42%;
+
+    border: 2px solid white;
+}
+
+.retireRow {
+    width: 100%;
+    height: 5%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
