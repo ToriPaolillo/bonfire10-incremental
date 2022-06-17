@@ -18,6 +18,7 @@ export class InfoPanelComponent {
   @Input() character: Character;
   @Input() relevantTile: Tile;
 
+  spell: Spell;
   spellHovered = false;
   constructor() {
 
@@ -27,7 +28,7 @@ export class InfoPanelComponent {
     let that = this;
   }
 
-  ngOnChanges(changes){
+  ngOnChanges(changes) {
     let test = 9;
   }
   tileIsSpell() {
@@ -50,19 +51,34 @@ export class InfoPanelComponent {
     return !this.tileIsSpell() && !this.tileIsEnemy() && !this.tileIsAltar() && !this.tileIsShop();
   }
 
-  activateSpell(spell){
-    if(spell.canCast(this.character)){
+  activateSpell(spell) {
+    if (spell.canCast(this.character)) {
       spell.activateSpell(this.character);
     }
   }
 
-  mouseclickHeld(spell:Spell){
+  hoveringSpell(spell: Spell) {
+    this.spell = spell;
+    if(spell.canCast(this.character)){
+      this.spellHovered = true;
+    }
+  }
+
+  mouseclickHeld(spell: Spell) {
     spell.canCast(this.character) ? spell.spellBeingClickedSuccess = true : spell.spellBeingClickedFail = true;
   }
 
-  mouseClickUp(spell:Spell){
-    spell.spellBeingClickedSuccess = false 
+  mouseClickUp(spell: Spell) {
+    spell.spellBeingClickedSuccess = false
     spell.spellBeingClickedFail = false;
+  }
+
+
+  manaAfterSpellUse() {
+    if (this.spell.canCast(this.character)) {
+      return (this.character.currentMana - this.spell.manaCost) / this.character.baseMana
+    }
+    return this.character.currentMana / this.character.baseMana;
   }
 
 }

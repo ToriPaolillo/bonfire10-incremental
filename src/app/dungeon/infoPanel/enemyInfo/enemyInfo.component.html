@@ -30,7 +30,7 @@
             value="{{(enemy.currentHealth/enemy.getMaxHealth())*100}}">
         </mat-progress-bar>
         <mat-progress-bar class="healthBarFront" mode="determinate"
-            value="{{((enemy.currentHealth - character.getCurrentAttack())/enemy.currentHealth)*100}}">
+            value="{{((enemy.currentHealth - character.getCurrentAttack())/enemy.getMaxHealth())*100}}">
         </mat-progress-bar>
         <div class="barText">
             {{ enemy.currentHealth + "/" + enemy.getMaxHealth()}}

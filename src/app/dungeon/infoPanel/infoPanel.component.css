@@ -160,11 +160,11 @@ p{
     fill: transparent;
   }
   
-  .manaBarFront ::ng-deep .mat-progress-bar-fill::after {
+  .manaBarBack ::ng-deep .mat-progress-bar-fill::after {
     background-color: rgb(4, 80, 194);
   }
   
-  .manaBarFront ::ng-deep.mat-progress-bar-buffer{
+  .manaBarBack ::ng-deep.mat-progress-bar-buffer{
     background-color:black;
   }
 

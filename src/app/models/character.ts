@@ -48,8 +48,6 @@ export class Character {
   weakened: boolean;
 
 
-
-
   constructor() {
     this.name = 'Jared'
     this.race = 'Human'
@@ -78,13 +76,13 @@ export class Character {
     this.levelNumberWidth = 6;
     this.levelNumberHeight = 12;
 
-    this.spells=[];
+    this.spells = [];
     for (let i = 0; i < this.spellSlots; i++) {
       this.spells.push(new Spell('empty'));
     }
 
     this.bloodMagic = false;
-    
+
     this.combatPreview = false;
     this.combatPreviewDamage = 0;
 
@@ -92,40 +90,40 @@ export class Character {
   }
 
 
-  getMaxHealth(){
+  getMaxHealth() {
     return this.baseHealth * this.level;
   }
 
-  getCurrentAttack(){
+  getCurrentAttack() {
     return (this.baseStrength * this.level) + this.bonusStrength
   }
 
-  getMaxExperience(){
+  getMaxExperience() {
     return this.level * 5
   }
 
-  getHealthRegen(){
+  getHealthRegen() {
     return this.bloodMagic ? 0 : this.level * this.baseHealthRegen;
   }
 
-  getManaRegen(){
+  getManaRegen() {
     return this.bloodMagic ? this.baseManaRegen * 2 : this.baseManaRegen;
   }
 
-  exploredSquare(){
-    (this.currentHealth + this.getHealthRegen() ) > this.getMaxHealth() ? this.currentHealth = this.getMaxHealth() : this.currentHealth += this.getHealthRegen();
-    (this.currentMana + this.getManaRegen() ) > this.baseMana ? this.currentMana = this.baseMana : this.currentMana += this.getManaRegen();
+  exploredSquare() {
+    (this.currentHealth + this.getHealthRegen()) > this.getMaxHealth() ? this.currentHealth = this.getMaxHealth() : this.currentHealth += this.getHealthRegen();
+    (this.currentMana + this.getManaRegen()) > this.baseMana ? this.currentMana = this.baseMana : this.currentMana += this.getManaRegen();
   }
 
-  addSpell(newSpell:Spell){
+  addSpell(newSpell: Spell) {
     let slotFound = false;
 
     let newSpellList = []; // this temp variable is necssary because just updating the existing spells variable doesn't trigger ngOnChanges for the Character class. It has to be reset to a new variable
-    this.spells.forEach(spell=>{
-      if(spell.name == 'empty' && !slotFound){
+    this.spells.forEach(spell => {
+      if (spell.name == 'empty' && !slotFound) {
         newSpellList.push(newSpell);
         slotFound = true;
-      } else{
+      } else {
         newSpellList.push(spell)
       }
     })
@@ -135,10 +133,10 @@ export class Character {
 
   }
 
-  spellSlotsOpen(){
+  spellSlotsOpen() {
     let slotOpen = false;
-    this.spells.forEach(spell=>{
-      if(spell.name == 'empty'){
+    this.spells.forEach(spell => {
+      if (spell.name == 'empty') {
         slotOpen = true;
       }
     });

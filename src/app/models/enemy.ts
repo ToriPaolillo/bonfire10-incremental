@@ -82,11 +82,17 @@ export class Enemy {
     }
   }
 
-  simulateCombat(){
+  combat(character: Character){
+    this.currentHealth -= character.getCurrentAttack();
+    character.currentHealth -= this.getCurrentAttack();
 
-  }
+    if(this.currentHealth <= 0){
+      this.currentHealth = 0;
+    }
 
-  combat(character){
-
+    if(character.currentHealth <= 0){
+      character.currentHealth = 0;
+    }
+    this.setNextHit(character);
   }
 }
