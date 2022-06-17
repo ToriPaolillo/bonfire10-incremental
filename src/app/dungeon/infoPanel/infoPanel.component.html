@@ -66,10 +66,10 @@
 
         <div class="statsRowRow">
             <img style="float: left;" src="assets/images/default/MPBoost.png" class="noselect" width="40" height="40">
-            <mat-progress-bar mode="determinate" [ngClass]="spellHovered ? 'manaBarBack' : 'manaBarSolo'"
+            <mat-progress-bar mode="determinate" [ngClass]="spellHovered && !this.spellRecycle ? 'manaBarBack' : 'manaBarSolo'"
                 value="{{(character.currentMana/character.baseMana)*100}}">
             </mat-progress-bar>
-            <mat-progress-bar *ngIf="spellHovered" class="manaBarFront" mode="determinate"
+            <mat-progress-bar *ngIf="spellHovered && !this.spellRecycle" class="manaBarFront" mode="determinate"
                 value="{{manaAfterSpellUse()*100}}">
             </mat-progress-bar>
             <div class="barText">
@@ -79,19 +79,32 @@
 
         <div>
 
-            <div *ngFor="let spell of character.spells; let i = index;" [ngStyle]="{'margin-left.px': 150/(character.spells.length+1)}" class="container"
-            (click)='activateSpell(spell)' (mousedown)='mouseclickHeld(spell);' (mouseup)='mouseClickUp(spell)' (mouseleave)='mouseClickUp(spell); spellHovered=false' (mouseenter)='hoveringSpell(spell)'>
+            <div *ngFor="let spell of character.spells; let i = index;"
+            [ngClass]="(spellRecycle && spell.name != 'empty') ? 'recycleHover' : ''"
+                [ngStyle]="{'margin-left.px': 150/(character.spells.length+1)}" class="container"
+                (click)='onSpellClick(spell)' (mousedown)='mouseclickHeld(spell);' (mouseup)='mouseClickUp(spell)'
+                (mouseleave)='mouseClickUp(spell); spellHovered=false' (mouseenter)='hoveringSpell(spell)'>
                 <img src="assets/images/default/G_Empty.png" class="backgroundImage noselect" width="40" height="40">
-                <img src="assets/images/default/{{spell.pngString}}.png" class="topImage noselect" width="40" height="40">
-                <img *ngIf="spell.name != 'empty'" src="assets/images/default/G_Yellow.png" class="topImage noselect" width="40" height="40">
-                <img *ngIf="spell.spellBeingClickedSuccess" src="assets/images/default/G_Green.png" class="topImage noselect" width="40" height="40">
-                <img *ngIf="spell.spellBeingClickedFail" src="assets/images/default/G_Red.png" class="topImage noselect" width="40" height="40">
+                <img src="assets/images/default/{{spell.pngString}}.png" class="topImage noselect" width="40"
+                    height="40">
+                <img *ngIf="spell.name != 'empty'" src="assets/images/default/G_Yellow.png" class="topImage noselect"
+                    width="40" height="40">
+                <img *ngIf="spell.spellBeingClickedSuccess" src="assets/images/default/G_Green.png"
+                    class="topImage noselect" width="40" height="40">
+                <img *ngIf="spell.spellBeingClickedFail || (spellRecycle && spell.name != 'empty')" src="assets/images/default/G_Red.png" class="topImage noselect"
+                    width="40" height="40">
 
-                
+
             </div>
 
-            <img style="float: left" [ngStyle]="{'margin-left.px': 150/(character.spells.length+1)}" src="assets/images/default/G_Converter.png"
-                class="backgroundImage noselect" width="40" height="40">
+            <div class="container" [ngStyle]="{'margin-left.px': 150/(character.spells.length+1)}"
+                (click)='onRecycleClick()' matTooltip="{{recycleTooltip}}" #tooltip="matTooltip" [matTooltipPosition]="'above'"
+                >
+                <img style="float: left" src="assets/images/default/G_Converter.png" class="backgroundImage noselect"
+                    width="40" height="40">
+                <img *ngIf="spellRecycle" style="float: left" src="assets/images/default/G_Red.png" class="topImage noselect"
+                    width="40" height="40">
+            </div>
 
         </div>
     </div>
@@ -103,7 +116,7 @@
             style="font-size: 24px; color:white; display: inline-block; margin: 6px 0px 0px 6px;">
             {{character.race + " " +character.class}}
         </div>
-        <spellInfo *ngIf="tileIsSpell()" [character]=character [relevantTile]=relevantTile></spellInfo>
+        <spellInfo *ngIf="tileIsSpell()" [character]=character [relevantTile]=relevantTile [spellRecycle]=spellRecycle></spellInfo>
         <enemyInfo *ngIf="tileIsEnemy()" [character]=character [relevantTile]=relevantTile></enemyInfo>
 
 

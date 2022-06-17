@@ -20,6 +20,9 @@ export class InfoPanelComponent {
 
   spell: Spell;
   spellHovered = false;
+
+  spellRecycle = false;
+  recycleTooltip = "Toggles spell recycle. When active, clicking aquired spells will recycle them, granting you some bonus based on your class"
   constructor() {
 
   }
@@ -59,13 +62,15 @@ export class InfoPanelComponent {
 
   hoveringSpell(spell: Spell) {
     this.spell = spell;
-    if(spell.canCast(this.character)){
+    if (spell.canCast(this.character)) {
       this.spellHovered = true;
     }
   }
 
   mouseclickHeld(spell: Spell) {
-    spell.canCast(this.character) ? spell.spellBeingClickedSuccess = true : spell.spellBeingClickedFail = true;
+    if (spell.name != 'empty') {
+      spell.canCast(this.character) ? spell.spellBeingClickedSuccess = true : spell.spellBeingClickedFail = true;
+    }
   }
 
   mouseClickUp(spell: Spell) {
@@ -81,4 +86,17 @@ export class InfoPanelComponent {
     return this.character.currentMana / this.character.baseMana;
   }
 
+  onSpellClick(spell: Spell) {
+    if (this.spellRecycle) {
+      this.character.recycleSpell(spell);
+    } else {
+      this.activateSpell(spell);
+    }
+  }
+
+  onRecycleClick() {
+    this.spellRecycle = !this.spellRecycle
+    this.spellRecycle ? this.recycleTooltip = "ACTIVE: any spells clicked will be recycled" : this.recycleTooltip = "Toggles spell recycle. When active, clicking aquired spells will recycle them, granting you some bonus based on your class"
+
+  }
 }

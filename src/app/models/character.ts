@@ -129,7 +129,22 @@ export class Character {
     })
 
     this.spells = newSpellList;
+  }
 
+  recycleSpell(recSpell : Spell){
+    let i = 0;
+    this.spells.forEach(spell => {
+      if (spell.name == recSpell.name) {
+        this.spells[i] = new Spell('empty');
+      } 
+      i++;
+    })
+
+    this.spells;
+    this.spellRecycleBonus();
+  }
+
+  spellRecycleBonus(){
 
   }
 

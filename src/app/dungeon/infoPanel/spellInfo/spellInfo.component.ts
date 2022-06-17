@@ -14,6 +14,7 @@ export class SpellInfoComponent {
 
   @Input() character: Character;
   @Input() relevantTile: Tile;
+  @Input() spellRecycle: Boolean
   spell: Spell;
   hovered = false;
   constructor() {
@@ -33,20 +34,36 @@ export class SpellInfoComponent {
   }
 
   pickUp() {
-    if (this.character.spellSlotsOpen()) {
-      this.character.addSpell(this.spell);
-      this.relevantTile.contents = this.character
-      this.relevantTile.playerAndContent = false;
+    if(this.spellRecycle){
+      this.character.recycleSpell(this.spell);
+    } else{
+      if (this.character.spellSlotsOpen()) {
+        this.character.addSpell(this.spell);
+      }
     }
+    this.relevantTile.contents = this.character
+    this.relevantTile.playerAndContent = false;
   }
 
-  getButtonsStyle(){
-    if(this.hovered){
-      if(this.character.spellSlotsOpen()){
+  getButtonsStyle() {
+    if (this.spellRecycle) {
+      return 'fullSpellSlots'
+    } else {
+
+      if (this.character.spellSlotsOpen()) {
         return 'openSpellSlots'
       }
-    } 
+
+    }
     return 'fullSpellSlots'
+  }
+
+  pickupText() {
+    if (this.spellRecycle) {
+      return 'Recycle'
+    } else {
+      return 'Pick Up'
+    }
   }
 
 }

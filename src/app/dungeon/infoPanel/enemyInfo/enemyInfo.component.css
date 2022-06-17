@@ -100,6 +100,11 @@
   left: 46px;
 }
 
+::ng-deep.mat-progress-bar .mat-progress-bar-fill{
+  transition: none !important;
+}
+
+
 .statsRowRow{
   height: 46px;
   width: 100%;

@@ -19,6 +19,10 @@ img {
   float: left;
 }
 
+.recycleHover{
+  opacity: 0.5;
+}
+
 .backgroundImage {
   position: relative;
   margin: 6px;
@@ -54,6 +58,12 @@ img {
   margin-left: 4px;
 }
 
+.openSpellSlots {
+  border-color: white !important;
+  color: white;
+  opacity: 1 !important;
+}
+
 .openSpellSlots:hover {
   border-color: rgb(255, 255, 0) !important;
   color: rgb(255, 255, 0);
@@ -61,7 +71,7 @@ img {
 }
 
 
-.fullSpellSlots:hover {
+.fullSpellSlots {
   border-color: rgb(241, 51, 26) !important;
   color: rgb(241, 51, 26);
   opacity: 1 !important;
