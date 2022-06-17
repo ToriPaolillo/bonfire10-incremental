@@ -18,6 +18,7 @@ export class InfoPanelComponent {
   @Input() character: Character;
   @Input() relevantTile: Tile;
 
+  spellHovered = false;
   constructor() {
 
   }

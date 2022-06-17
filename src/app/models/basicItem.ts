@@ -65,9 +65,12 @@ export class BasicItem {
       case 'manaBoost':
         character.baseMana++;
         break;
-      case 'strengthBoost':
-        character.bonusStrength++;
-        break;
+        case 'strengthBoost':
+          character.bonusStrength++;
+          break;
+          case 'blood':
+            
+            break;
       default:
         break;
     }

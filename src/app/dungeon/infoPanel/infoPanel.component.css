@@ -93,15 +93,6 @@ p{
     border-radius: 0px;
 }
 
-#healthBar ::ng-deep .mat-progress-bar-fill::after {
-    background-color: rgb(255, 17, 0);
-}
-
-#manaBar ::ng-deep .mat-progress-bar-fill::after {
-    background-color: rgb(5, 104, 253);
-}
-
-
 
 
 
@@ -128,10 +119,103 @@ p{
     padding-right: 4px;
 }
 
-.statsRowRow{
-    height: 46px;
-}
+  /* Health Bars*/
 
+  .healthBarFront ::ng-deep .mat-progress-bar-fill::after {
+    background-color: rgb(255, 17, 0);
+  }
+  .healthBarFront ::ng-deep.mat-progress-bar-buffer{
+    background-color:unset;
+  }
+  
+  .healthBarFront ::ng-deep.mat-progress-bar-background {
+    fill: transparent;
+  }
+  
+  .healthBarBack ::ng-deep .mat-progress-bar-fill::after {
+    background-color: rgb(158, 21, 21);
+  }
+  
+  .healthBarBack ::ng-deep.mat-progress-bar-buffer{
+    background-color:black;
+  }
+
+  .healthBarSolo ::ng-deep .mat-progress-bar-fill::after {
+    background-color: rgb(255, 17, 0);
+  }
+  
+  .healthBarSolo ::ng-deep.mat-progress-bar-buffer{
+    background-color:black;
+  }
+
+  /* Mana Bars*/
+  .manaBarFront ::ng-deep .mat-progress-bar-fill::after {
+    background-color: rgb(5, 104, 253);
+  }
+  .manaBarFront ::ng-deep.mat-progress-bar-buffer{
+    background-color:unset;
+  }
+  
+  .manaBarFront ::ng-deep.mat-progress-bar-background {
+    fill: transparent;
+  }
+  
+  .manaBarFront ::ng-deep .mat-progress-bar-fill::after {
+    background-color: rgb(4, 80, 194);
+  }
+  
+  .manaBarFront ::ng-deep.mat-progress-bar-buffer{
+    background-color:black;
+  }
+
+  .manaBarSolo ::ng-deep .mat-progress-bar-fill::after {
+    background-color: rgb(5, 104, 253);
+  }
+  
+  .manaBarSolo ::ng-deep.mat-progress-bar-buffer{
+    background-color:black;
+  }
+
+  
+  .healthBarFront, .manaBarFront{
+    position: absolute;
+    height: 32px;
+    width: 290px;
+    top: 4px;
+    margin-right: 4px;
+    left: 46px;
+    z-index: 5;
+  }
+  
+  .healthBarBack, .healthBarSolo, .manaBarBack, .manaBarSolo{
+    position: absolute;
+    height: 32px;
+    width: 290px;
+    top: 4px;
+    margin-right: 4px;
+    left: 46px;
+  }
+
+  
+  
+  .statsRowRow{
+    height: 46px;
+    width: 100%;
+    position: relative;
+  }
+  
+  .barText{
+    position:relative; 
+    top: 10px; 
+    left: 14px; 
+    font-size: 24px; 
+    color:white; display: inline-block;
+    z-index: 6;
+  }
+  
+  
+  
+  
 
 .effectsRow {
     width: 100%;

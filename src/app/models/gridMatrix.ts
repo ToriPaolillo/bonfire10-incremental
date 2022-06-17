@@ -58,30 +58,30 @@ export class GridMatrix {
 
         // level 1
         for (let i = 0; i < 10; i++) {
-            tiles.push(new Tile(false, false, true, new Enemy(1)));
+            tiles.push(new Tile(false, false, true, new Enemy(1, character)));
         }
         // level 2
         for (let i = 0; i < 5; i++) {
-            tiles.push(new Tile(false, false, true, new Enemy(2)));
+            tiles.push(new Tile(false, false, true, new Enemy(2, character)));
         }
         // level 3
         for (let i = 0; i < 4; i++) {
-            tiles.push(new Tile(false, false, true, new Enemy(3)));
+            tiles.push(new Tile(false, false, true, new Enemy(3, character)));
         }
         // level 4, 5, 6, 7, 8
         for (let i = 0; i < 3; i++) {
-            tiles.push(new Tile(false, false, true, new Enemy(4)));
-            tiles.push(new Tile(false, false, true, new Enemy(5)));
-            tiles.push(new Tile(false, false, true, new Enemy(6)));
-            tiles.push(new Tile(false, false, true, new Enemy(7)));
-            tiles.push(new Tile(false, false, true, new Enemy(8)));
+            tiles.push(new Tile(false, false, true, new Enemy(4, character)));
+            tiles.push(new Tile(false, false, true, new Enemy(5, character)));
+            tiles.push(new Tile(false, false, true, new Enemy(6, character)));
+            tiles.push(new Tile(false, false, true, new Enemy(7, character)));
+            tiles.push(new Tile(false, false, true, new Enemy(8, character)));
         }
         // level 9
         for (let i = 0; i < 2; i++) {
-            tiles.push(new Tile(false, false, true, new Enemy(9)));
+            tiles.push(new Tile(false, false, true, new Enemy(9, character)));
         }
         // level 10
-        tiles.push(new Tile(false, false, true, new Enemy(10)));
+        tiles.push(new Tile(false, false, true, new Enemy(10, character)));
 
         // explorable wall tiles
         for (let i = 0; i < 150; i++) {
@@ -471,82 +471,84 @@ export class GridMatrix {
         if (playerTile.contents instanceof Character && !(clickedTile.contents instanceof Enemy)) {
             playerTile.contents = new BasicItem('empty');
         }
-        if (playerTile.playerAndContent) {
+        if (playerTile.playerAndContent && !(clickedTile.contents instanceof Enemy)) {
             playerTile.playerAndContent = false;
         }
 
-        this.clickAction(clickedTile, character);
+        let moved = this.clickAction(clickedTile, character);
 
-        let x = clickedTile.xCoord;
-        let y = clickedTile.yCoord;
+        if (moved) {
+            let x = clickedTile.xCoord;
+            let y = clickedTile.yCoord;
 
-        let top = true;
-        let bot = true;
-        let left = true;
-        let right = true;
+            let top = true;
+            let bot = true;
+            let left = true;
+            let right = true;
 
-        if (x + 1 > 19) {
-            right = false
-        }
-        if (x - 1 < 0) {
-            left = false
-        }
-        if (y + 1 > 19) {
-            top = false
-        }
-        if (y - 1 < 0) {
-            bot = false
-        }
-
-        if (right) {
-            if (!this.tileArray[x + 1][y].explored) {
-                this.tileArray[x + 1][y].explored = true;
-                character.exploredSquare();
+            if (x + 1 > 19) {
+                right = false
             }
+            if (x - 1 < 0) {
+                left = false
+            }
+            if (y + 1 > 19) {
+                top = false
+            }
+            if (y - 1 < 0) {
+                bot = false
+            }
+
+            if (right) {
+                if (!this.tileArray[x + 1][y].explored) {
+                    this.tileArray[x + 1][y].explored = true;
+                    character.exploredSquare();
+                }
+                if (top) {
+                    if (!this.tileArray[x + 1][y + 1].explored) {
+                        this.tileArray[x + 1][y + 1].explored = true;
+                        character.exploredSquare();
+                    }
+                }
+                if (bot) {
+                    if (!this.tileArray[x + 1][y - 1].explored) {
+                        this.tileArray[x + 1][y - 1].explored = true;
+                        character.exploredSquare();
+                    }
+                }
+            }
+
+            if (left) {
+                if (!this.tileArray[x - 1][y].explored) {
+                    this.tileArray[x - 1][y].explored = true;
+                    character.exploredSquare();
+                }
+                if (top) {
+                    if (!this.tileArray[x - 1][y + 1].explored) {
+                        this.tileArray[x - 1][y + 1].explored = true;
+                        character.exploredSquare();
+                    }
+                }
+                if (bot) {
+                    if (!this.tileArray[x - 1][y - 1].explored) {
+                        this.tileArray[x - 1][y - 1].explored = true;
+                        character.exploredSquare();
+                    }
+                }
+            }
+
             if (top) {
-                if (!this.tileArray[x + 1][y + 1].explored) {
-                    this.tileArray[x + 1][y + 1].explored = true;
+                if (!this.tileArray[x][y + 1].explored) {
+                    this.tileArray[x][y + 1].explored = true;
                     character.exploredSquare();
                 }
             }
-            if (bot) {
-                if (!this.tileArray[x + 1][y - 1].explored) {
-                    this.tileArray[x + 1][y - 1].explored = true;
-                    character.exploredSquare();
-                }
-            }
-        }
 
-        if (left) {
-            if (!this.tileArray[x - 1][y].explored) {
-                this.tileArray[x - 1][y].explored = true;
-                character.exploredSquare();
-            }
             if (top) {
-                if (!this.tileArray[x - 1][y + 1].explored) {
-                    this.tileArray[x - 1][y + 1].explored = true;
+                if (!this.tileArray[x][y - 1].explored) {
+                    this.tileArray[x][y - 1].explored = true;
                     character.exploredSquare();
                 }
-            }
-            if (bot) {
-                if (!this.tileArray[x - 1][y - 1].explored) {
-                    this.tileArray[x - 1][y - 1].explored = true;
-                    character.exploredSquare();
-                }
-            }
-        }
-
-        if (top) {
-            if (!this.tileArray[x][y + 1].explored) {
-                this.tileArray[x][y + 1].explored = true;
-                character.exploredSquare();
-            }
-        }
-
-        if (top) {
-            if (!this.tileArray[x][y - 1].explored) {
-                this.tileArray[x][y - 1].explored = true;
-                character.exploredSquare();
             }
         }
     }
@@ -554,18 +556,19 @@ export class GridMatrix {
 
 
     clickAction(clickedTile, character) {
+        let moved = true;
         if (clickedTile.contents instanceof BasicItem) {
             clickedTile.contents.pickupAction(character);
         }
 
         if (clickedTile.canInteractWith()) {
             clickedTile.playerAndContent = true;
-        } else if(clickedTile.contents instanceof Enemy){
+        } else if (clickedTile.contents instanceof Enemy) {
             clickedTile.contents.combat(character);
-        } else
-            {
+            moved = false;
+        } else {
             clickedTile.contents = this.character
         }
-        return;
+        return moved;
     }
 }

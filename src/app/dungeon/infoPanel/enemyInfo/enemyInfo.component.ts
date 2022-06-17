@@ -24,6 +24,7 @@ export class EnemyInfoComponent {
     let that = this;
     if (this.relevantTile != null && this.relevantTile.contents != null && this.relevantTile.contents instanceof Enemy) {
       this.enemy = this.relevantTile.contents;
+      this.enemy.setNextHit(this.character);
     }
   }
 

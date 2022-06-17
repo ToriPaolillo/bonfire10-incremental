@@ -51,24 +51,28 @@
             </div>
         </div>
 
-
         <div class="statsRowRow">
             <img style="float: left;" src="assets/images/default/HPBoost.png" class="noselect" width="40" height="40">
-            <mat-progress-bar id="healthBar" style="height:32px; width: 308px; float:right; margin-top: 5px;"
-                mode="determinate" value="{{(character.currentHealth/(character.baseHealth * character.level))*100}}">
+            <mat-progress-bar mode="determinate" [ngClass]="tileIsEnemy() ? 'healthBarBack' : 'healthBarSolo'"
+                value="{{(character.currentHealth/character.getMaxHealth())*100}}">
             </mat-progress-bar>
-            <div
-                style="position:relative; top: -26px; left: 16px; font-size: 24px; color:white; display: inline-block;">
+            <mat-progress-bar *ngIf="tileIsEnemy()" class="healthBarFront" mode="determinate"
+                value="{{((character.currentHealth - relevantTile.contents.getCurrentAttack())/character.currentHealth)*100}}">
+            </mat-progress-bar>
+            <div class="barText">
                 {{ character.currentHealth + "/" + character.getMaxHealth()}}
             </div>
         </div>
 
         <div class="statsRowRow">
             <img style="float: left;" src="assets/images/default/MPBoost.png" class="noselect" width="40" height="40">
-            <mat-progress-bar id="manaBar" style="height:32px; width: 308px; float:right; margin-top: 5px;"
-                mode="determinate" value="{{(character.currentMana/character.baseMana)*100}}"></mat-progress-bar>
-            <div
-                style="position:relative; top: -26px; left: 16px; font-size: 24px; color:white; display: inline-block;">
+            <mat-progress-bar mode="determinate" [ngClass]="spellHovered ? 'manaBarBack' : 'manaBarSolo'"
+                value="{{(character.currentMana/character.baseMana)*100}}">
+            </mat-progress-bar>
+            <mat-progress-bar *ngIf="spellHovered" class="manaBarFront" mode="determinate"
+                value="{{((character.currentMana - relevantTile.contents.manaCost)/character.currentMana)*100}}">
+            </mat-progress-bar>
+            <div class="barText">
                 {{ character.currentMana + "/" + character.baseMana}}
             </div>
         </div>
@@ -76,7 +80,7 @@
         <div>
 
             <div *ngFor="let spell of character.spells; let i = index;" [ngStyle]="{'margin-left.px': 150/(character.spells.length+1)}" class="container"
-            (click)='activateSpell(spell)' (mousedown)='mouseclickHeld(spell)' (mouseup)='mouseClickUp(spell)' (mouseleave)='mouseClickUp(spell)'>
+            (click)='activateSpell(spell)' (mousedown)='mouseclickHeld(spell); spellHovered=false' (mouseup)='mouseClickUp(spell)' (mouseleave)='mouseClickUp(spell); spellHovered=false' (mouseenter)='spellHovered=true'>
                 <img src="assets/images/default/G_Empty.png" class="backgroundImage noselect" width="40" height="40">
                 <img src="assets/images/default/{{spell.pngString}}.png" class="topImage noselect" width="40" height="40">
                 <img *ngIf="spell.name != 'empty'" src="assets/images/default/G_Yellow.png" class="topImage noselect" width="40" height="40">

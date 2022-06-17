@@ -32,6 +32,8 @@ export class Character {
   pngString: String;
   levelNumberWidth: number;
   levelNumberHeight: number;
+  combatPreview: boolean;
+  combatPreviewDamage: number;
 
   //temp positive statuses
   firstStrike: boolean;
@@ -83,6 +85,8 @@ export class Character {
 
     this.bloodMagic = false;
     
+    this.combatPreview = false;
+    this.combatPreviewDamage = 0;
 
 
   }

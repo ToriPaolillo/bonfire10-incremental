@@ -24,3 +24,93 @@
   position: absolute;
   margin: 6px;
 }
+
+
+
+.enemyName{
+  color: white;
+  font-size: 36px;
+  font-weight: 500;
+  padding-top: 15px;
+  line-height: 34px;
+}
+
+.estimateText{
+  color: white;
+  font-size: 24px;
+  font-weight: 500;
+  padding-top: 10px;
+  float:left;
+}
+
+.statusText{
+  font-size: 24px;
+  font-weight: 500;
+  padding-top: 10px;
+  margin-left: 4px;
+  float:left;
+}
+
+
+.labelDiv{
+  display: table-cell;
+  padding: 10px 0px 0px 2px;
+  vertical-align: middle;
+  float: left;
+  font-size: 36px;
+  color: white;
+}
+
+.healthBarFront ::ng-deep .mat-progress-bar-fill::after {
+  background-color: rgb(255, 17, 0);
+}
+.healthBarFront ::ng-deep.mat-progress-bar-buffer{
+  background-color:unset;
+}
+
+.healthBarFront ::ng-deep.mat-progress-bar-background {
+  fill: transparent;
+}
+
+.healthBarBack ::ng-deep .mat-progress-bar-fill::after {
+  background-color: rgb(158, 21, 21);
+  color: unset;
+}
+
+.healthBarBack ::ng-deep.mat-progress-bar-buffer{
+  background-color:black;
+}
+
+.healthBarFront{
+  position: absolute;
+  height: 32px;
+  width: 290px;
+  top: 4px;
+  margin-right: 4px;
+  left: 46px;
+  z-index: 5;
+}
+
+.healthBarBack{
+  position: absolute;
+  height: 32px;
+  width: 290px;
+  top: 4px;
+  margin-right: 4px;
+  left: 46px;
+}
+
+.statsRowRow{
+  height: 46px;
+  width: 100%;
+  position: relative;
+}
+
+.barText{
+  position:relative; 
+  top: 10px; 
+  left: 14px; 
+  font-size: 24px; 
+  color:white; display: inline-block;
+  z-index: 6;
+}

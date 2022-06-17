@@ -28,11 +28,12 @@ export class Enemy {
   pngString: String;
   levelNumberWidth: number;
   levelNumberHeight: number;
+  nextHit: string;
+  nextHitTextColor: string;
 
 
 
-
-  constructor(level: number) {
+  constructor(level: number, character:Character) {
     this.pngString = 'MeatMan'
     this.name = 'Meat Man'
     this.type = 'Normal'
@@ -45,6 +46,8 @@ export class Enemy {
     this.permaFirstStrike = false;
     level == 10 ? this.levelNumberWidth = 12 : this.levelNumberWidth = 6;
     this.levelNumberHeight = 10;
+
+    this.setNextHit(character);
 
   }
 
@@ -66,15 +69,17 @@ export class Enemy {
 
   }
 
-  nextHit(character: Character){
-    let result = 'SAFE';
-
+  setNextHit(character: Character){
     if(character.currentHealth <= this.getCurrentAttack()){
-      result = 'DEATH';
+      this.nextHit = 'DEATH';
+      this.nextHitTextColor = 'red'
     } else if(this.currentHealth <= character.getCurrentAttack()) {
-      result = 'VICTORY';
+      this.nextHit = 'VICTORY';
+      this.nextHitTextColor = 'green'
+    } else{
+      this.nextHit = 'SAFE';
+      this.nextHitTextColor = 'yellow'
     }
-    return result;
   }
 
   simulateCombat(){
