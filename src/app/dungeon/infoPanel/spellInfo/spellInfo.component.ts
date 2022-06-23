@@ -36,13 +36,15 @@ export class SpellInfoComponent {
   pickUp() {
     if(this.spellRecycle){
       this.character.recycleSpell(this.spell);
+      this.relevantTile.contents = this.character
+      this.relevantTile.playerAndContent = false;
     } else{
       if (this.character.spellSlotsOpen()) {
         this.character.addSpell(this.spell);
+        this.relevantTile.contents = this.character
+        this.relevantTile.playerAndContent = false;
       }
     }
-    this.relevantTile.contents = this.character
-    this.relevantTile.playerAndContent = false;
   }
 
   getButtonsStyle() {

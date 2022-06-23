@@ -33,7 +33,7 @@ export class Enemy {
 
 
 
-  constructor(level: number, character:Character) {
+  constructor(level: number, character: Character) {
     this.pngString = 'MeatMan'
     this.name = 'Meat Man'
     this.type = 'Normal'
@@ -65,34 +65,57 @@ export class Enemy {
   }
 
 
-  GenerateRandomEnemyType(){
+  GenerateRandomEnemyType() {
 
   }
 
-  setNextHit(character: Character){
-    if(character.currentHealth <= this.getCurrentAttack()){
-      this.nextHit = 'DEATH';
-      this.nextHitTextColor = 'red'
-    } else if(this.currentHealth <= character.getCurrentAttack()) {
+  setNextHit(character: Character) {
+    let combatResult = character.predictCombat(this)
+
+    if (combatResult.death =='enemyDeath') {
       this.nextHit = 'VICTORY';
       this.nextHitTextColor = 'green'
-    } else{
+    } else if (combatResult.death == 'characterDeath') {
+      this.nextHit = 'DEATH';
+      this.nextHitTextColor = 'red'
+    } else {
       this.nextHit = 'SAFE';
       this.nextHitTextColor = 'yellow'
     }
   }
 
-  combat(character: Character){
-    this.currentHealth -= character.getCurrentAttack();
-    character.currentHealth -= this.getCurrentAttack();
-
-    if(this.currentHealth <= 0){
-      this.currentHealth = 0;
+  whoHasFirstStrike(character: Character) {
+    let firstStrike = 'none'
+    if (this.permaFirstStrike && !character.firstStrike) {
+      firstStrike = 'enemy';
+    } else if (character.firstStrike) {
+      firstStrike = 'character';
     }
+    return firstStrike;
 
-    if(character.currentHealth <= 0){
-      character.currentHealth = 0;
-    }
-    this.setNextHit(character);
   }
+
+  getPredictedCombatHealth(character: Character) {
+    return character.predictCombat(this).enemyHealth / this.getMaxHealth()
+  }
+
+  combat(character: Character) {
+    let combatResult = character.predictCombat(this);
+    if(combatResult.spell != null){
+      combatResult.spell.activateSpell(character, this);
+    }else{
+      character.currentHealth = combatResult.characterHealth;
+      this.currentHealth = combatResult.enemyHealth;
+      if (!character.permaFirstStrike) {
+        character.firstStrike = false;
+      }
+    }
+
+    this.setNextHit(character);
+
+
+
+    return combatResult.death;
+  }
+
 }

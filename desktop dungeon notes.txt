@@ -64,15 +64,39 @@ level up exp
 8: 40
 9: 45
 
+total exp
+1:5
+2:15
+3:30
+4:50
+5:75
+6:105
+7:140
+8:180
+9:225
+
+
+1:1
+2:3
+3:6
+4:10
+5:15
+6:21
+
+
+
+
+
+
 experience bonus when defeating higher level enemies:
 same level or below: x1
 1 killing 2 = 4
-2 killing 3 = 6
-3 killing 4 = 7
-4 killing 5 = 8
-5 killing 6 = 9
-6 killing 7 = 10
-7 killing 8 = 11
+2 killing 3 = 5
+3 killing 4 = 6
+4 killing 5 = 7
+5 killing 6 = 8
+6 killing 7 = 9
+7 killing 8 = 10
 
 1 killing 3 = ?
 2 killing 4 = ?

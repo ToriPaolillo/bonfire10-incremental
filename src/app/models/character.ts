@@ -1,5 +1,7 @@
 import { Injectable } from "@angular/core";
+import { Enemy } from "./enemy";
 import { Spell } from "./spell";
+import * as _ from 'lodash';
 
 @Injectable()
 export class Character {
@@ -32,8 +34,6 @@ export class Character {
   pngString: String;
   levelNumberWidth: number;
   levelNumberHeight: number;
-  combatPreview: boolean;
-  combatPreviewDamage: number;
 
   //temp positive statuses
   firstStrike: boolean;
@@ -53,7 +53,7 @@ export class Character {
     this.race = 'Human'
     this.class = 'Fighter'
     this.level = 3
-    this.experience = 7;
+    this.experience = 22;
     this.gold = 13
     this.piety = 20
     this.healthPotions = 1;
@@ -83,8 +83,6 @@ export class Character {
 
     this.bloodMagic = false;
 
-    this.combatPreview = false;
-    this.combatPreviewDamage = 0;
 
 
   }
@@ -131,12 +129,12 @@ export class Character {
     this.spells = newSpellList;
   }
 
-  recycleSpell(recSpell : Spell){
+  recycleSpell(recSpell: Spell) {
     let i = 0;
     this.spells.forEach(spell => {
       if (spell.name == recSpell.name) {
         this.spells[i] = new Spell('empty');
-      } 
+      }
       i++;
     })
 
@@ -144,7 +142,12 @@ export class Character {
     this.spellRecycleBonus();
   }
 
-  spellRecycleBonus(){
+  getCurrentLevelExp() {
+    return this.experience - (5 * (0.5 * (this.level - 1)) * this.level);
+  }
+
+
+  spellRecycleBonus() {
 
   }
 
@@ -156,6 +159,93 @@ export class Character {
       }
     });
     return slotOpen;
+  }
+
+  killedEnemy(enemy: Enemy) {
+    let expBoost = enemy.level
+    switch (enemy.level - this.level) {
+      case 0:
+        break;
+      case 1:
+        expBoost = enemy.level + 2
+        break;
+      case 2:
+        break;
+      case 3:
+        break;
+      case 4:
+        break;
+      default:
+        break;
+
+
+
+    }
+    this.experience += expBoost
+    if (this.getCurrentLevelExp() >= this.level * 5) {
+      this.level++
+      this.currentHealth = this.getMaxHealth()
+      this.currentMana = this.baseMana
+    }
+  }
+
+  predictCombat(enemy: Enemy): any {
+    let activeSpell = _.find(this.spells, { targetFirstClick: true })
+    if (activeSpell != null) {
+      let characterHealth = this.currentHealth;
+      let enemyHealth = enemy.currentHealth
+      let death = 'none'
+      if(activeSpell.name == 'Fire Ball'){
+        enemyHealth = enemy.currentHealth - (this.level * 4);
+        if (enemyHealth <= 0) {
+          enemyHealth = 0;
+          death = 'enemyDeath';
+        }
+      }
+      
+      let combatResult = { characterHealth: characterHealth, enemyHealth: enemyHealth, death: death, spell: activeSpell }
+      return combatResult
+
+    } else {
+      let firstStrike = enemy.whoHasFirstStrike(this);
+
+
+      let characterHealth = this.currentHealth - enemy.getCurrentAttack();
+      let enemyHealth = enemy.currentHealth - this.getCurrentAttack();
+      let death = 'none';
+
+
+
+      if (enemyHealth <= 0) {
+        enemyHealth = 0;
+        death = 'enemyDeath';
+      }
+
+      if (characterHealth <= 0) {
+        characterHealth = 0;
+        death = 'characterDeath'
+      }
+
+      if (enemyHealth <= 0 && firstStrike == 'character') {
+        characterHealth = this.currentHealth;
+        death = 'enemyDeath';
+      }
+
+      let combatResult = { characterHealth: characterHealth, enemyHealth: enemyHealth, death: death }
+
+      return combatResult
+    }
+
+
+  }
+
+  predictSpellEffect(enemy: Enemy) {
+
+  }
+
+
+  getPredictedCombatHealth(enemy: Enemy) {
+    return this.predictCombat(enemy).characterHealth / this.getMaxHealth()
   }
 
 }

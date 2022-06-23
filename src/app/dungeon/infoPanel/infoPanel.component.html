@@ -43,10 +43,10 @@
                 height="40">
             <div class="labelDiv"> {{character.getCurrentAttack()}} </div>
             <mat-progress-bar id="levelProgressBar" style="height:32px; width: 240px; float:right; margin-top: 5px;"
-                mode="determinate" value="{{(character.experience/(character.level*5))*100}}"></mat-progress-bar>
+                mode="determinate" value="{{(character.getCurrentLevelExp()/(character.level*5))*100}}"></mat-progress-bar>
             <div
                 style="position:relative; top: -26px; left: 95px; font-size: 24px; color:white; display: inline-block;">
-                {{ "Level " + character.level + " (" + character.experience + "/" + character.getMaxExperience() + ")"
+                {{ "Level " + character.level + " (" + character.getCurrentLevelExp() + "/" + character.getMaxExperience() + ")"
                 }}
             </div>
         </div>
@@ -57,7 +57,7 @@
                 value="{{(character.currentHealth/character.getMaxHealth())*100}}">
             </mat-progress-bar>
             <mat-progress-bar *ngIf="tileIsEnemy()" class="healthBarFront" mode="determinate"
-                value="{{((character.currentHealth - relevantTile.contents.getCurrentAttack())/character.getMaxHealth())*100}}">
+                value="{{character.getPredictedCombatHealth(relevantTile.contents)*100}}">
             </mat-progress-bar>
             <div class="barText">
                 {{ character.currentHealth + "/" + character.getMaxHealth()}}
@@ -69,7 +69,7 @@
             <mat-progress-bar mode="determinate" [ngClass]="spellHovered && !this.spellRecycle ? 'manaBarBack' : 'manaBarSolo'"
                 value="{{(character.currentMana/character.baseMana)*100}}">
             </mat-progress-bar>
-            <mat-progress-bar *ngIf="spellHovered && !this.spellRecycle" class="manaBarFront" mode="determinate"
+            <mat-progress-bar *ngIf="spellHovered && !this.spellRecycle || tileIsEnemy()" class="manaBarFront" mode="determinate"
                 value="{{manaAfterSpellUse()*100}}">
             </mat-progress-bar>
             <div class="barText">
@@ -87,9 +87,9 @@
                 <img src="assets/images/default/G_Empty.png" class="backgroundImage noselect" width="40" height="40">
                 <img src="assets/images/default/{{spell.pngString}}.png" class="topImage noselect" width="40"
                     height="40">
-                <img *ngIf="spell.name != 'empty'" src="assets/images/default/G_Yellow.png" class="topImage noselect"
+                <img *ngIf="spell.name != 'empty' && character.currentMana >= spell.manaCost" src="assets/images/default/G_Yellow.png" class="topImage noselect"
                     width="40" height="40">
-                <img *ngIf="spell.spellBeingClickedSuccess" src="assets/images/default/G_Green.png"
+                <img *ngIf="spell.spellBeingClickedSuccess || spell.toggleOn || spell.targetFirstClick" src="assets/images/default/G_Green.png"
                     class="topImage noselect" width="40" height="40">
                 <img *ngIf="spell.spellBeingClickedFail || (spellRecycle && spell.name != 'empty')" src="assets/images/default/G_Red.png" class="topImage noselect"
                     width="40" height="40">

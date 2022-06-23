@@ -18,6 +18,9 @@ export class BasicItem {
       case 'wall':
         pngString = 'Wall'
         break;
+      case 'blood':
+        pngString = 'Blood'
+        break;
       case 'empty':
         break;
       case 'gold':
@@ -65,12 +68,12 @@ export class BasicItem {
       case 'manaBoost':
         character.baseMana++;
         break;
-        case 'strengthBoost':
-          character.bonusStrength++;
-          break;
-          case 'blood':
-            
-            break;
+      case 'strengthBoost':
+        character.bonusStrength++;
+        break;
+      case 'blood':
+
+        break;
       default:
         break;
     }

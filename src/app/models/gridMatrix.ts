@@ -466,6 +466,119 @@ export class GridMatrix {
 
     clickedTile(clickedTile, character) {
 
+        let moved = this.clickAction(clickedTile, character);
+
+        if (moved) {
+            this.exploreSurroundingTiles(clickedTile, character, true);
+        }
+    }
+
+    exploreSurroundingTiles(clickedTile: Tile, character: Character, explore: boolean) {
+        let x = clickedTile.xCoord;
+        let y = clickedTile.yCoord;
+
+        let top = true;
+        let bot = true;
+        let left = true;
+        let right = true;
+
+        let surroundedByExplored = true;
+
+        if (x + 1 > 19) {
+            right = false
+        }
+        if (x - 1 < 0) {
+            left = false
+        }
+        if (y + 1 > 19) {
+            top = false
+        }
+        if (y - 1 < 0) {
+            bot = false
+        }
+
+        if (right) {
+            if (!this.tileArray[x + 1][y].explored) {
+                if (explore) {
+                    this.tileArray[x + 1][y].explored = true;
+                    character.exploredSquare();
+                }
+                surroundedByExplored = false;
+            }
+            if (top) {
+                if (!this.tileArray[x + 1][y + 1].explored) {
+                    if (explore) {
+                        this.tileArray[x + 1][y + 1].explored = true;
+                        character.exploredSquare();
+                    }
+                    surroundedByExplored = false;
+                }
+            }
+            if (bot) {
+                if (!this.tileArray[x + 1][y - 1].explored) {
+                    if (explore) {
+                        this.tileArray[x + 1][y - 1].explored = true;
+                        character.exploredSquare();
+                    }
+                    surroundedByExplored = false;
+                }
+            }
+        }
+
+        if (left) {
+            if (!this.tileArray[x - 1][y].explored) {
+                if (explore) {
+                    this.tileArray[x - 1][y].explored = true;
+                    character.exploredSquare();
+                }
+                surroundedByExplored = false;
+            }
+            if (top) {
+                if (!this.tileArray[x - 1][y + 1].explored) {
+                    if (explore) {
+                        this.tileArray[x - 1][y + 1].explored = true;
+                        character.exploredSquare();
+                    }
+                    surroundedByExplored = false;
+                }
+            }
+            if (bot) {
+                if (!this.tileArray[x - 1][y - 1].explored) {
+                    if (explore) {
+                        this.tileArray[x - 1][y - 1].explored = true;
+                        character.exploredSquare();
+                    }
+                    surroundedByExplored = false;
+                }
+            }
+        }
+
+        if (top) {
+            if (!this.tileArray[x][y + 1].explored) {
+                if (explore) {
+                    this.tileArray[x][y + 1].explored = true;
+                    character.exploredSquare();
+                }
+                surroundedByExplored = false;
+            }
+        }
+
+        if (bot) {
+            if (!this.tileArray[x][y - 1].explored) {
+                if (explore) {
+                    this.tileArray[x][y - 1].explored = true;
+                    character.exploredSquare();
+                }
+                surroundedByExplored = false;
+            }
+        }
+
+        return surroundedByExplored;
+    }
+
+
+
+    clickAction(clickedTile, character) {
         let playerTile = this.getPlayerTile();
 
         if (playerTile.contents instanceof Character && !(clickedTile.contents instanceof Enemy)) {
@@ -475,87 +588,7 @@ export class GridMatrix {
             playerTile.playerAndContent = false;
         }
 
-        let moved = this.clickAction(clickedTile, character);
 
-        if (moved) {
-            let x = clickedTile.xCoord;
-            let y = clickedTile.yCoord;
-
-            let top = true;
-            let bot = true;
-            let left = true;
-            let right = true;
-
-            if (x + 1 > 19) {
-                right = false
-            }
-            if (x - 1 < 0) {
-                left = false
-            }
-            if (y + 1 > 19) {
-                top = false
-            }
-            if (y - 1 < 0) {
-                bot = false
-            }
-
-            if (right) {
-                if (!this.tileArray[x + 1][y].explored) {
-                    this.tileArray[x + 1][y].explored = true;
-                    character.exploredSquare();
-                }
-                if (top) {
-                    if (!this.tileArray[x + 1][y + 1].explored) {
-                        this.tileArray[x + 1][y + 1].explored = true;
-                        character.exploredSquare();
-                    }
-                }
-                if (bot) {
-                    if (!this.tileArray[x + 1][y - 1].explored) {
-                        this.tileArray[x + 1][y - 1].explored = true;
-                        character.exploredSquare();
-                    }
-                }
-            }
-
-            if (left) {
-                if (!this.tileArray[x - 1][y].explored) {
-                    this.tileArray[x - 1][y].explored = true;
-                    character.exploredSquare();
-                }
-                if (top) {
-                    if (!this.tileArray[x - 1][y + 1].explored) {
-                        this.tileArray[x - 1][y + 1].explored = true;
-                        character.exploredSquare();
-                    }
-                }
-                if (bot) {
-                    if (!this.tileArray[x - 1][y - 1].explored) {
-                        this.tileArray[x - 1][y - 1].explored = true;
-                        character.exploredSquare();
-                    }
-                }
-            }
-
-            if (top) {
-                if (!this.tileArray[x][y + 1].explored) {
-                    this.tileArray[x][y + 1].explored = true;
-                    character.exploredSquare();
-                }
-            }
-
-            if (top) {
-                if (!this.tileArray[x][y - 1].explored) {
-                    this.tileArray[x][y - 1].explored = true;
-                    character.exploredSquare();
-                }
-            }
-        }
-    }
-
-
-
-    clickAction(clickedTile, character) {
         let moved = true;
         if (clickedTile.contents instanceof BasicItem) {
             clickedTile.contents.pickupAction(character);
@@ -564,11 +597,100 @@ export class GridMatrix {
         if (clickedTile.canInteractWith()) {
             clickedTile.playerAndContent = true;
         } else if (clickedTile.contents instanceof Enemy) {
-            clickedTile.contents.combat(character);
+            let result = clickedTile.contents.combat(character);
+            this.positionToAttackEnemy(clickedTile, character);
             moved = false;
+
+            if (result == 'enemyDeath') {
+                character.killedEnemy(clickedTile.contents);
+                clickedTile.contents = new BasicItem('blood');
+            }
         } else {
             clickedTile.contents = this.character
         }
         return moved;
     }
+
+    positionToAttackEnemy(clickedTile: Tile, character: Character) {
+
+
+        let x = clickedTile.xCoord;
+        let y = clickedTile.yCoord;
+
+
+        let top = true;
+        let bot = true;
+        let left = true;
+        let right = true;
+
+
+        if (x + 1 > 19) {
+            right = false
+        }
+        if (x - 1 < 0) {
+            left = false
+        }
+        if (y + 1 > 19) {
+            top = false
+        }
+        if (y - 1 < 0) {
+            bot = false
+        }
+
+        if (right) {
+            let tile = this.tileArray[x + 1][y];
+            if (tile.explored && this.exploreSurroundingTiles(tile, character, false) && tile.walkable && !(tile.contents instanceof Enemy)) {
+                this.clickAction(tile, character);
+            }
+            if (top) {
+                tile = this.tileArray[x + 1][y + 1];
+                if (tile.explored && this.exploreSurroundingTiles(tile, character, false) && tile.walkable && !(tile.contents instanceof Enemy)) {
+                    this.clickAction(tile, character);
+                }
+            }
+            if (bot) {
+                tile = this.tileArray[x + 1][y - 1];
+                if (tile.explored && this.exploreSurroundingTiles(tile, character, false) && tile.walkable && !(tile.contents instanceof Enemy)) {
+                    this.clickAction(tile, character);
+                }
+            }
+        }
+
+        if (left) {
+            let tile = this.tileArray[x - 1][y];
+            if (tile.explored && this.exploreSurroundingTiles(tile, character, false) && tile.walkable && !(tile.contents instanceof Enemy)) {
+                this.clickAction(tile, character);
+            }
+            if (top) {
+                tile = this.tileArray[x - 1][y+1];
+                if (tile.explored && this.exploreSurroundingTiles(tile, character, false) && tile.walkable && !(tile.contents instanceof Enemy)) {
+                    this.clickAction(tile, character);
+                }
+            }
+            if (bot) {
+                tile = this.tileArray[x - 1][y-1];
+                if (tile.explored && this.exploreSurroundingTiles(tile, character, false) && tile.walkable && !(tile.contents instanceof Enemy)) {
+                    this.clickAction(tile, character);
+                }
+            }
+        }
+
+        if (top) {
+            let tile = this.tileArray[x][y+1];
+            if (tile.explored && this.exploreSurroundingTiles(tile, character, false) && tile.walkable && !(tile.contents instanceof Enemy)) {
+                this.clickAction(tile, character);
+            }
+        }
+
+        if (bot) {
+            let tile = this.tileArray[x][y-1];
+            if (tile.explored && this.exploreSurroundingTiles(tile, character, false) && tile.walkable && !(tile.contents instanceof Enemy)) {
+                this.clickAction(tile, character);
+            }
+        }
+
+
+    }
+
+
 }

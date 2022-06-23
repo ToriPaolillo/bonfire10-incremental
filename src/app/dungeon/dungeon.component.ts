@@ -75,12 +75,24 @@ export class DungeonComponent {
   onClick(clickedTile) {
 
     if (clickedTile.explored && clickedTile.walkable) {
-      let updateInfoPanel = this.gridMatrix.clickedTile(clickedTile, this.character);
+      this.gridMatrix.clickedTile(clickedTile, this.character);
       this.relevantTile = clickedTile;
     }
   }
 
 
+  showTileHealthBar(tile: Tile) {
+    return (tile.contents != null && tile.contents.currentHealth != null && tile.contents.getMaxHealth() != null && tile.contents.currentHealth != tile.contents.getMaxHealth()) ||
+      (tile.playerAndContent && this.character.currentHealth != this.character.getMaxHealth())
+  }
+
+
+  getTileHealthBarValue(tile: Tile) {
+    if (tile.playerAndContent) {
+      return this.character.currentHealth / this.character.getMaxHealth()
+    }
+    return tile.contents.currentHealth / tile.contents.getMaxHealth()
+  }
 
 
   magnifyLevel(tile) {

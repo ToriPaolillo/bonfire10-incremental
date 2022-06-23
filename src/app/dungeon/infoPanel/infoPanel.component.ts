@@ -54,12 +54,6 @@ export class InfoPanelComponent {
     return !this.tileIsSpell() && !this.tileIsEnemy() && !this.tileIsAltar() && !this.tileIsShop();
   }
 
-  activateSpell(spell) {
-    if (spell.canCast(this.character)) {
-      spell.activateSpell(this.character);
-    }
-  }
-
   hoveringSpell(spell: Spell) {
     this.spell = spell;
     if (spell.canCast(this.character)) {
@@ -80,18 +74,46 @@ export class InfoPanelComponent {
 
 
   manaAfterSpellUse() {
-    if (this.spell.canCast(this.character)) {
-      return (this.character.currentMana - this.spell.manaCost) / this.character.baseMana
+    if (this.spell != null) {
+      if (this.tileIsEnemy()) {
+        return this.spell.predictSpellUse(this.character, true);
+      }
+      return this.spell.predictSpellUse(this.character);
     }
-    return this.character.currentMana / this.character.baseMana;
+    else {
+      return this.character.currentMana / this.character.baseMana;
+    }
   }
 
   onSpellClick(spell: Spell) {
     if (this.spellRecycle) {
       this.character.recycleSpell(spell);
-    } else {
-      this.activateSpell(spell);
+    } else if (spell.canCast(this.character)) {
+      switch (spell.type) {
+        case 'cast':
+          spell.activateSpell(this.character);
+          break;
+        case 'toggle':
+          spell.activateSpell(this.character);
+          spell.toggleOn = !spell.toggleOn;
+          break;
+        case 'target':
+          if (!spell.targetFirstClick) {
+            this.character.spells.forEach(currentSpell => {
+              currentSpell.targetFirstClick = false;
+            });
+            spell.targetFirstClick = true;
+          } else {
+            spell.targetFirstClick = false;
+
+          }
+          break;
+        default:
+          break;
+      }
     }
+
+
   }
 
   onRecycleClick() {
